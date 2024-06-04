@@ -29,7 +29,7 @@ def flipMultiDict(eDict, fDict):
 		A dictionary in this form: (eValueSet,fValueSet):key
 	"""
 	inv = {}
-	allKeys = eDict.viewkeys() | fDict.viewkeys()
+	allKeys = eDict.keys() | fDict.keys()
 	for k in allKeys:
 		eVal = frozenset(eDict.get(k, ()))
 		fVal = frozenset(fDict.get(k, ()))
@@ -150,7 +150,7 @@ def matchByTopology(orderMesh, shapeMesh, vertexPairs, matchedNum=None, vertNum=
 		if vertNum is not None:
 			percent = (len(orderVerts) + matchedNum) / vertNum * 100
 			if pBar is None:
-				print "\rPercentage processed: {0:.2f}%".format(percent),
+				print ("\rPercentage processed: {0:.2f}%".format(percent)),
 			else:
 				pBar.setValue(int(percent))
 				QApplication.processEvents()
@@ -186,7 +186,7 @@ def matchByTopology(orderMesh, shapeMesh, vertexPairs, matchedNum=None, vertNum=
 
 		# Then, if the swapped dict's value only has 1 item
 		# it is a uniquely identified vertex and can be matched
-		for orderKey, orderValue in orderEFDict.iteritems():
+		for orderKey, orderValue in orderEFDict.items():
 			if len(orderValue) == 1:
 				edgeKey = frozenset(orderToShape[i] for i in orderKey[0])
 				faceKey = frozenset(orderToShape[i] for i in orderKey[1])
@@ -223,10 +223,10 @@ def matchByTopology(orderMesh, shapeMesh, vertexPairs, matchedNum=None, vertNum=
 				updated = True
 
 	if vertNum is not None and pBar is None:
-		print #clear the percentage value
+		print() #clear the percentage value
 
 	#if vertNum is not None:
-		#print "\n"
-	return [(k, v) for k, v in orderToShape.iteritems()]
+		#print ("\n")
+	return [(k, v) for k, v in orderToShape.items()]
 
 

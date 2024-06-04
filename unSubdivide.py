@@ -5,7 +5,11 @@ Move the vertices so a new subdivision will match the
 original as closely as possible
 """
 import numpy as np
-from itertools import chain, izip_longest
+try:
+	from itertools import izip_longest
+except:
+	from itertools import zip_longest as izip_longest
+
 from MeshCrawler.Qt.QtWidgets import QApplication
 
 def mergeCycles(groups):
@@ -83,7 +87,7 @@ def buildHint(island, neigh, borders):
 			d.setdefault(len(neigh[v]), []).append(v)
 
 		dd = {}
-		for k, v in d.iteritems():
+		for k, v in d.items():
 			dd.setdefault(len(v), []).append(k)
 
 		mkey = min(dd.keys())
@@ -258,7 +262,7 @@ def buildNeighborDict(faces):
 
 	borders = set()
 	out = {}
-	for k, v in fanDict.iteritems():
+	for k, v in fanDict.items():
 		fans, cycles = mergeCycles(v)
 		for f, c in zip(fans, cycles):
 			if not c:
@@ -297,7 +301,7 @@ def buildLayeredNeighborDicts(faces, uFaces, dWings):
 
 	assert borders >= uBorders, "Somehow the unsubdivided borders contain different vIdxs"
 
-	for i, (k, uNeigh) in enumerate(uNeighDict.iteritems()):
+	for i, (k, uNeigh) in enumerate(uNeighDict.items()):
 		neighDict[k] = _align(neighDict[k], uNeigh, dWings)
 
 	return neighDict, uNeighDict, edgeDict, uEdgeDict, borders
@@ -505,7 +509,7 @@ def deleteCenters(meshFaces, uvFaces, centerDel, pBar=None):
 		pBar.setMaximum(len(faceDelDict))
 
 	chk = -1
-	for idx, rFaces in faceDelDict.iteritems():
+	for idx, rFaces in faceDelDict.items():
 		chk += 1
 		if pBar is not None:
 			pBar.setValue(chk)
@@ -523,8 +527,8 @@ def deleteCenters(meshFaces, uvFaces, centerDel, pBar=None):
 			try:
 				diag, nxt, uvf = faceEnds.pop(end)
 			except KeyError:
-				print "rFaces", rFaces
-				print "fe", faceEnds
+				print ("rFaces", rFaces)
+				print ("fe", faceEnds)
 				raise
 			if uvf is not None:
 				try:
@@ -532,7 +536,7 @@ def deleteCenters(meshFaces, uvFaces, centerDel, pBar=None):
 					uvWings.setdefault(uvf[1], []).append(uvf[2])
 					uvWings.setdefault(uvf[3], []).append(uvf[2])
 				except IndexError:
-					print "UVF", uvf, chk
+					print ("UVF", uvf, chk)
 					raise
 
 			newFace.append(diag)

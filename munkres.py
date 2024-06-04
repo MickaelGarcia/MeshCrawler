@@ -67,7 +67,7 @@ and calculate the smallest cost of the combinations:
             cost += matrix[row][col]
         minval = min(cost, minval)
 
-    print minval
+    print (minval)
 
 While this approach works fine for small matrices, it does not scale. It
 executes in O(*n*!) time: Calculating the permutations for an *n*\ x\ *n*

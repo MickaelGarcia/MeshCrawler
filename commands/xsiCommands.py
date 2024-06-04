@@ -63,7 +63,7 @@ def getUVs(thing):
 
 	# Build the collapsed uv list
 	uvs = [None] * len(uvd)
-	for uv, idx in uvd.iteritems():
+	for uv, idx in uvd.items():
 		uvs[idx] = uv
 	uvs = np.array(uvs)
 
